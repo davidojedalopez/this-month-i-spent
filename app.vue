@@ -40,12 +40,12 @@
         </form>
 
         <!-- Otherwise if we have a token, show the budget select -->
-        <Budgets v-else-if="!budgetId" :budgets="budgets" :selectBudget="selectBudget" />
+        <!-- <Budgets v-else-if="!budgetId" :budgets="budgets" :selectBudget="selectBudget" /> -->
 
         <!-- If a budget has been selected, display transactions from that budget -->
         <div v-else>          
           <TransactionsByDay :transactionsByDay="transactionsByDay" />
-          <button class="btn btn-info" @click="budgetId = null">&lt; Select Another Budget</button>
+          <!-- <button class="btn btn-info" @click="budgetId = null">&lt; Select Another Budget</button> -->
         </div>
 
       </div>
@@ -78,7 +78,7 @@ export default {
       },
       loading: false,
       error: null,
-      budgetId: null,
+      budgetId: "default",
       budgets: [],
       transactions: [],
       transactionsMaximumAmount: null,
@@ -122,8 +122,7 @@ export default {
       const startDate = new Date(); 
       let formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
 
-      console.info(formattedStartDate)
-      this.api.transactions.getTransactions(id, "2023-04-30").then((res) => {
+      this.api.transactions.getTransactions(id, formattedStartDate).then((res) => {
         this.transactions = res.data.transactions;
         // Assuming 'transactions' is the array of transaction objects
         let transactions = this.transactions.filter(transaction => transaction.category_id !== null);
@@ -134,9 +133,6 @@ export default {
 
           this.transactionsMaximumAmount = maxTransaction;
           this.transactionsMinimumAmount = minTransaction;
-
-          console.log(`Minimum transaction amount is: ${minTransaction}`);
-          console.log(`Maximum transaction amount is: ${maxTransaction}`);
         } else {
           console.log('No transactions found');
         }
@@ -161,7 +157,6 @@ export default {
         }, {});
 
       this.transactionsByDay = groupedTransactions;
-      console.log(groupedTransactions);
 
       }).catch((err) => {
         this.error = err.error.detail;
@@ -173,7 +168,7 @@ export default {
     // https://api.youneedabudget.com/#outh-applications
     authorizeWithYNAB(e) {
       e.preventDefault();
-      const uri = `https://app.youneedabudget.com/oauth/authorize?client_id=${this.ynab.clientId}&redirect_uri=${this.ynab.redirectUri}&response_type=token`;
+      const uri = `https://app.youneedabudget.com/oauth/authorize?client_id=${this.ynab.clientId}&redirect_uri=${this.ynab.redirectUri}&response_type=token&scope=read-only`;
       location.replace(uri);
     },
     // Method to find a YNAB token
@@ -222,10 +217,12 @@ export default {
       }
     },
     iconSize() {
-      return (amount) => {
+      return (amount) => {        
         const baseSize = 28; // You can adjust this base size
         const maxSize = 64;
         const scale = 0.002; // Scale factor, adjust based on your preference
+        console.info({amount})
+        console.info(`${Math.min(baseSize + (amount * scale), maxSize)}px`);
         return `${Math.min(baseSize + (amount * scale), maxSize)}px`;
       }
     },
