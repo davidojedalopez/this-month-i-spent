@@ -1,8 +1,0 @@
-{
-  "name": "functions",
-  "description": "Dependencies for Netlify functions",
-  "private": true,
-  "dependencies": {
-    "ynab": "^1.55.0"
-  }
-}

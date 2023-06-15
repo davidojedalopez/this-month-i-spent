@@ -2,8 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "buildFunctions": "cd netlify/functions/ && npm install && cd ../../",
-    "build": "npm run buildFunctions && nuxt build",
+    "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

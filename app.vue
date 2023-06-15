@@ -91,7 +91,7 @@ export default {
   mounted() {
     this.ynab.token = this.findYNABToken();
     if (this.ynab.token) {
-      this.api = new ynab.api(this.ynab.token);
+      /* this.api = new ynab.api(this.ynab.token); */
       this.selectBudget(this.budgetId);
     }
   },
