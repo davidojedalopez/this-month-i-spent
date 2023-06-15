@@ -112,7 +112,11 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ budgetId: id, startDate: formattedStartDate }),
+        body: JSON.stringify({ 
+          budget_id: id, 
+          start_date: formattedStartDate, 
+          token: this.ynab.token
+        }),
       }).then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

@@ -1,3 +1,2 @@
 [build]
   functions = "netlify/functions"
-  environment = { YNAB_API_KEY = "E7CowrUrZKx5W8Grgl6KHg_rWvpbTJumLVwWtdKMh8s" }
