@@ -56,7 +56,7 @@
 
 <script>
 // Hooray! Here comes YNAB!
-import * as ynab from 'ynab';
+/* import * as ynab from 'ynab'; */
 
 // Import our config for YNAB
 import config from './config.json';
@@ -92,26 +92,10 @@ export default {
     this.ynab.token = this.findYNABToken();
     if (this.ynab.token) {
       this.api = new ynab.api(this.ynab.token);
-      if (!this.budgetId) {
-        this.getBudgets();
-      } else {
-        this.selectBudget(this.budgetId);
-      }
+      this.selectBudget(this.budgetId);
     }
   },
-  methods: {
-    // This uses the YNAB API to get a list of budgets
-    getBudgets() {
-      this.loading = true;
-      this.error = null;
-      this.api.budgets.getBudgets().then((res) => {
-        this.budgets = res.data.budgets;
-      }).catch((err) => {
-        this.error = err.error.detail;
-      }).finally(() => {
-        this.loading = false;
-      });
-    },
+  methods: {        
     // This selects a budget and gets all the transactions in that budget
     selectBudget(id) {
       this.loading = true;
@@ -122,8 +106,19 @@ export default {
       const startDate = new Date(); 
       let formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
 
-      this.api.transactions.getTransactions(id, formattedStartDate).then((res) => {
-        this.transactions = res.data.transactions;
+      fetch("/.netlify/functions/getTransactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ budgetId: id, startDate: formattedStartDate }),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      }).then((data) => {
+        this.transactions = data.transactions;
         // Assuming 'transactions' is the array of transaction objects
         let transactions = this.transactions.filter(transaction => transaction.category_id !== null);
 
@@ -159,7 +154,7 @@ export default {
       this.transactionsByDay = groupedTransactions;
 
       }).catch((err) => {
-        this.error = err.error.detail;
+        this.error = "Error fetching transaction data: " + error;
       }).finally(() => {
         this.loading = false;
       });
