@@ -106,6 +106,7 @@ export default {
       const startDate = new Date(); 
       let formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
 
+      console.info("Calling Netlify function...");
       fetch("/.netlify/functions/getTransactions", {
         method: "POST",
         headers: {
