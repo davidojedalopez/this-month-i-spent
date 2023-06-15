@@ -18,24 +18,14 @@
 
         <!-- If we dont have a token ask the user to authorize with YNAB -->
         <form v-if="!ynab.token">
-          <h1 class="display-4">Congrats!</h1>
-          <p class="lead">You have successfully initialized a new YNAB API Application!</p>
-          <p>The next step is the OAuth configuration, you can
-            <a href="https://github.com/jlumbroso/ynab-api-starter-kit#step-2-obtain-an-oauth-client-id-so-the-app-can-access-the-ynab-api">read
-              detailed instructions in the README.md</a>. Essentially:</p>
-          <ul>
-            <li>Make sure to be logged into your YNAB account, go to your <a href="https://app.youneedabudget.com/settings/developer" target="_blank" rel="noopener noreferrer">YNAB Developer Settings</a> and create a new OAuth Application.</li>
-            <li>Enter the URL of this project as a Redirect URI (in addition to the existing three options), then "Save Application."</li>
-            <li>Copy your Client ID and Redirect URI into the <em>src/config.json</em> file of your project.</li>
-            <li>Then build your amazing app!</li>
-          </ul>
-          <p>If you have any questions please reach out to us at <strong>api@youneedabudget.com</strong>.</p>
-          <p>&nbsp;</p>
-
+          <h1 class="display-4">Income and spending calendar view</h1>
+          <p class="lead">Your outflows and inflows in a calendar-like view.</p>
+          <p>The bigger the icon, the bigger the amount.</p>            
+                
           <div class="form-group">
-            <h2>Hello!</h2>
-            <p class="lead">If you would like to use this App, please authorize with YNAB!</p>
-            <button @click="authorizeWithYNAB" class="btn btn-primary">Authorize This App With YNAB &gt;</button>
+            <br>         
+            <button @click="authorizeWithYNAB" class="cool-button">Authorize this app with YNAB 👈</button>
+            <p class="small-text">I don't store anything in any server. The authorization lasts 2 hours, and it has read-only permissions.</p>
           </div>
         </form>
 
@@ -221,8 +211,6 @@ export default {
         const baseSize = 28; // You can adjust this base size
         const maxSize = 64;
         const scale = 0.002; // Scale factor, adjust based on your preference
-        console.info({amount})
-        console.info(`${Math.min(baseSize + (amount * scale), maxSize)}px`);
         return `${Math.min(baseSize + (amount * scale), maxSize)}px`;
       }
     },
@@ -241,3 +229,38 @@ export default {
   }
 }
 </script>
+
+<style scopped>
+body {
+  font-size: 1.5rem;
+}
+
+.cool-button {
+  display: inline-block;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.375em;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.cool-button:hover {
+  background-color: #2563eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cool-button:active {
+  background-color: #1d4ed8;
+}
+
+.small-text {
+  font-size: 0.75em;
+}
+</style>
