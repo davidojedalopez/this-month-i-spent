@@ -1,5 +1,6 @@
+const ynab = require("ynab");
+
 exports.handler = async (event, context) => {
-  const ynab = require("ynab");
   try {
     if (event.httpMethod !== "POST") {
       return { statusCode: 405, body: "Method Not Allowed" };
