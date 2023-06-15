@@ -1,14 +1,7 @@
 {
   "name": "functions",
-  "version": "1.0.0",
-  "description": "",
-  "main": "getTransactions.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Dependencies for Netlify functions",
+  "private": true,
   "dependencies": {
     "ynab": "^1.55.0"
   }
