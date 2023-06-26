@@ -1,17 +1,15 @@
 <template>
-  <div>
-
+    <h2>Income & spending calendar view</h2>
     <VCalendar 
-      expanded 
-      title-position="left"
-      :attributes="calendarAttributes" 
-      :timezone="calendarTimezone"/>
-   
-  </div>
+        expanded 
+        title-position="left"
+        :attributes="calendarAttributes" 
+        :timezone="calendarTimezone"/>
 </template>
 
 <script>
-export default {
+
+export default {  
   data () {
     return {
 
@@ -54,8 +52,8 @@ export default {
       return "UTC"
     }
   },
-  props: ['transactionsByDay', 'transactions'],
-  inject: ['spendingColor', 'incomeColor', 'iconSize']
+  props: ['transactionsByDay'],
+  inject: ['spendingColor', 'incomeColor', 'iconSize']  
 };
 </script>
 

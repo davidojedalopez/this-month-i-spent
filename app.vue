@@ -32,9 +32,11 @@
         <!-- <Budgets v-else-if="!budgetId" :budgets="budgets" :selectBudget="selectBudget" /> -->
 
         <!-- If a budget has been selected, display transactions from that budget -->
-        <div v-else>          
-          <TransactionsByDay :transactionsByDay="transactionsByDay"
-                             :transactions="transactions" />
+        <div v-else>
+          <Reports :transactionsByDay="transactionsByDay"
+                   :transactions="transactions"/>
+          <!-- <TransactionsByDay :transactionsByDay="transactionsByDay"
+                             :transactions="transactions" /> -->
           <!-- <button class="btn btn-info" @click="budgetId = null">&lt; Select Another Budget</button> -->
         </div>
 
@@ -54,8 +56,8 @@
 import config from './config.json';
 
 // Import Our Components to Compose Our App
-import Budgets from './src/components/Budgets.vue';
-import TransactionsByDay from './src/components/TransactionsByDay.vue';
+// import Budgets from './src/components/Budgets.vue';
+import Reports from './src/components/Reports.vue';
 
 export default {  
   // The data to feed our templates
@@ -225,9 +227,8 @@ export default {
     }
   },
   // Specify which components we want to make available to our templates
-  components: {
-    Budgets,
-    TransactionsByDay
+  components: {    
+    Reports
   }
 }
 </script>
