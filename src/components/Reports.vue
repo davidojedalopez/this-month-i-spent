@@ -2,11 +2,13 @@
     <h1>Random reports</h1>
     
     <Calendar :transactionsByDay="transactionsByDay" />
+    <MostExpensiveCategories :transactions="transactions" />
            
 </template>
 
 <script>
 import Calendar from './Calendar.vue';
+import MostExpensiveCategories from './MostExpensiveCategories.vue';
 
 export default {
   data () {
@@ -16,7 +18,8 @@ export default {
   props: ['transactionsByDay', 'transactions'],
   inject: ['spendingColor', 'incomeColor', 'iconSize'],
   components: {
-    Calendar
+    Calendar,
+    MostExpensiveCategories
   }
 };
 </script>
