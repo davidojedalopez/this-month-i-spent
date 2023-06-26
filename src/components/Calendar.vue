@@ -1,7 +1,10 @@
 <template>
     <h2>Income & spending calendar view</h2>
     <VCalendar 
-        expanded 
+        expanded
+        borderless
+        transparent
+        is-dark="system"
         title-position="left"
         :attributes="calendarAttributes" 
         :timezone="calendarTimezone"/>
@@ -123,5 +126,9 @@ export default {
 
 .placeholder {
   flex-grow: 1;
+}
+
+.vc-container .vc-weekday-1, .vc-container .vc-weekday-7 {
+  font-weight: bold;
 }
 </style>
