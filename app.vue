@@ -2,7 +2,6 @@
   <div id="app">
 
     <div class="container">
-
       <!-- Display a loading message if loading -->
       <h1 v-if="loading" class="display-4">Loading...</h1>
 
@@ -34,13 +33,16 @@
 
         <!-- If a budget has been selected, display transactions from that budget -->
         <div v-else>          
-          <TransactionsByDay :transactionsByDay="transactionsByDay" />
+          <TransactionsByDay :transactionsByDay="transactionsByDay"
+                             :transactions="transactions" />
           <!-- <button class="btn btn-info" @click="budgetId = null">&lt; Select Another Budget</button> -->
         </div>
 
       </div>
 
     </div>
+
+  
   </div>
 </template>
 
@@ -55,8 +57,7 @@ import config from './config.json';
 import Budgets from './src/components/Budgets.vue';
 import TransactionsByDay from './src/components/TransactionsByDay.vue';
 
-
-export default {
+export default {  
   // The data to feed our templates
   data () {
     return {
@@ -73,7 +74,8 @@ export default {
       transactions: [],
       transactionsMaximumAmount: null,
       transactionsMinimumAmount: null,
-      transactionsByDay: []
+      transactionsByDay: [],
+      selectedDate: null
     }
   },
   // When this component is created, check whether we need to get a token,
@@ -96,7 +98,6 @@ export default {
       const startDate = new Date(); 
       let formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
 
-      console.info("Calling Netlify function...");
       fetch("/.netlify/functions/getTransactions", {
         method: "POST",
         headers: {
@@ -128,7 +129,8 @@ export default {
         }
 
         let groupedTransactions = transactions.reduce((groups, transaction) => {
-          let transactionDay = Number(transaction.date.split('-')[2]) // get the day of the month
+          // let transactionDay = Number(transaction.date.split('-')[2]) // get the day of the month
+          let transactionDay = transaction.date
           let transactionAmount = transaction.amount / 1000; // convert to decimal
 
           if (!groups[transactionDay]) {
@@ -149,7 +151,7 @@ export default {
       this.transactionsByDay = groupedTransactions;
 
       }).catch((err) => {
-        this.error = "Error fetching transaction data: " + error;
+        this.error = "Error fetching transaction data: " + err;
       }).finally(() => {
         this.loading = false;
       });

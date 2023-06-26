@@ -12,11 +12,9 @@ exports.handler = async (event, context) => {
     const startDate = data.start_date;
     const token = data.token;
 
-    console.info({budgetId, startDate});
     const ynabAPI = new ynab.API(token);
-    console.info({ynabAPI});
     const response = await ynabAPI.transactions.getTransactions(budgetId, startDate);
-    console.info({response})
+    
     return {
       statusCode: 200,
       body: JSON.stringify(response.data),

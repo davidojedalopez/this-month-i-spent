@@ -1,4 +1,7 @@
 {
   "clientId": "E7CowrUrZKx5W8Grgl6KHg_rWvpbTJumLVwWtdKMh8s",
-  "redirectUri": "https://ynab-calendar-view.netlify.app/"
+  "redirectUri": "http://localhost:8888",
+  "__comment": {
+    "redirectUri": "https://ynab-calendar-view.netlify.app/"
+  }
 }
