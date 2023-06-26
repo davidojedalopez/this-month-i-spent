@@ -97,7 +97,9 @@ export default {
       this.budgetId = id;
       this.transactions = [];
 
-      const startDate = new Date(); 
+      // const startDate = new Date(); 
+      
+      const startDate = this.$getPreviousMonth(new Date())
       let formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-01`;
 
       fetch("/.netlify/functions/getTransactions", {
