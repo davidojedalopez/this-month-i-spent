@@ -2,9 +2,7 @@
     <h2>Income & spending calendar view</h2>
     <VCalendar 
         expanded
-        borderless
-        transparent
-        is-dark="system"
+        borderless        
         title-position="left"
         :attributes="calendarAttributes" 
         :timezone="calendarTimezone"/>
